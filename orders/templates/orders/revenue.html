@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Выручка{% endblock %}
+{% block content%}
+<!--
+    Этот шаблон отображает общую выручку за все оплаченные заказы.
+    Включает сумму выручки и кнопку для возврата к списку заказов.
+-->
+<div class="card">
+    <div class="card-header">
+        <h2>Общая выручка</h2>
+    </div>
+    <div class="card-body">
+        <p>
+            Сумма оплаченных заказов: 
+            <strong>{{ total_revenue }} ₽</strong></p> 
+            <!--Переменная {{ total_revenue }} содержит сумму всех оплаченных заказов. Она передается из представления (views.py) через контекст. -->
+        <a href="{% url 'order_list' %}" class="btn btn-secondary">Назад к заказам</a>
+    </div>
+</div>
+{% endblock %}

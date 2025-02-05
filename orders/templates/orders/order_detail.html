@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}Детали заказа №{{ order.id }}{% endblock %}
+{% block content %}
+<!--
+    Этот шаблон отображает детальную информацию о конкретном заказе.
+    Включает номер стола, статус, общую стоимость и состав заказа.
+-->
+<div class="container mt-4">
+    <h2 class="mb-4">Детали заказа №{{ order.id }}</h2>  <!-- Заголовок страницы -->
+    
+    <div class="card shadow-sm">
+        <div class="card-header"> <!-- Шапка карточки -->
+            Информация о заказе
+        </div>
+        <div class="card-body">
+            <!-- Основная информация -->
+            <div class="row mb-3">
+                <div class="col-md-6"> 
+                    <p><strong>Стол:</strong> {{ order.table_number }}</p> <!-- Номер стола -->
+                    <p><strong>Статус:</strong> <!-- Статус заказа -->
+                        {% if order.status == 'pending' %}
+                            <span class="badge bg-warning text-dark">В ожидании</span>
+                        {% elif order.status == 'ready' %}
+                            <span class="badge bg-success">Готово</span>
+                        {% elif order.status == 'paid' %}
+                            <span class="badge bg-primary">Оплачено</span>
+                        {% endif %}
+                    </p> 
+                    <!--
+                        В зависимости от значения поля status заказа, отображается соответствующий значок со статусом:
+                        - "В ожидании" — желтый значок (bg-warning)
+                        - "Готово" — зеленый значок (bg-success)
+                        - "Оплачено" — синий значок (bg-primary)
+                    -->
+                </div>
+                <div class="col-md-6 text-end">
+                    <p><strong>Общая стоимость:</strong> {{ order.total_price }} руб.</p>
+                </div>
+            </div>
+
+            <!-- Список блюд -->
+            <h5 class="mb-3">Состав заказа</h5>
+            <ul class="list-group">
+                {% for item in order.items %}
+                    <!-- Каждое блюдо в заказе -->
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        {{ item.name }}
+                        <span class="badge bg-secondary">{{ item.price }} руб.</span>
+                    </li>
+                {% empty %}
+                    <li class="list-group-item">Заказ пуст</li>
+                {% endfor %}
+            </ul>
+
+            <!-- Кнопки -->
+            <div class="d-flex gap-2 mt-4">
+                <a href="{% url 'order_list' %}" class="btn btn-outline-secondary">Назад к списку заказов</a>
+                <a href="{% url 'order_edit' order.id %}" class="btn btn-warning">Изменить статус</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
