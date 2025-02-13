@@ -53,7 +53,7 @@
 Склонируйте репозиторий на свой компьютер:
 
 ```bash
-git clone https://github.com/<ваш-username>/cafe-order-system.git
+git clone https://github.com/<username>/cafe_order_management_systems
 cd cafe-order-system 
 ```
 
